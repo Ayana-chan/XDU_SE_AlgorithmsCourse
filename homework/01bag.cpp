@@ -7,12 +7,44 @@
 
 using namespace std;
 
+void dfsBag(int index, int &restBagSize, int &currValue, int &maxValue, const vector<int> &weight,
+            const vector<int> &value) {
+    if (index >= weight.size()) {
+        return;
+    }
+    //不塞
+//    cout<<"no  currValue: "<<currValue<<" index: "<<index<<endl;
+    dfsBag(index + 1, restBagSize, currValue, maxValue, weight, value);
+    //能塞
+//    cout<<"restBagSize: "<<restBagSize<<endl;
+    if (restBagSize >= weight[index]) {
+        //塞
+        restBagSize -= weight[index];
+        currValue += value[index];
+//        cout<<"yes currValue: "<<currValue<<" index: "<<index<<endl;
+        //检测是否最大，更新结果
+        if (currValue > maxValue) {
+            maxValue = currValue;
+        }
+        dfsBag(index + 1, restBagSize, currValue, maxValue, weight, value);
+        restBagSize += weight[index];
+        currValue -= value[index];
+    }
+}
+
+int solveBagRecursion(const vector<int> &weight, const vector<int> &value, int bagSize) {
+    int currValue = 0;
+    int maxValue = 0;
+    dfsBag(0, bagSize, currValue, maxValue, weight, value);
+    return maxValue;
+}
+
 int solveBagDP(const vector<int> &weight, const vector<int> &value, const int &bagSize) {
     int itemNum = weight.size();
     if (itemNum == 0) {
         return 0;
     }
-    cout << "itemNum: " << itemNum << " bagSize: " << bagSize << endl;
+//    cout << "itemNum: " << itemNum << " bagSize: " << bagSize << endl;
 
     //dp矩阵，行号为物品号，列号为背包容量
     //j=0时，值都为0
@@ -48,12 +80,16 @@ int solveBagDP(const vector<int> &weight, const vector<int> &value, const int &b
 int main() {
 //    vector<int> weight = {1, 3, 4};
 //    vector<int> value = {15, 20, 30};
+//    int bagSize = 4;
     vector<int> weight = {3, 5, 1, 2, 2};
     vector<int> value = {4, 5, 2, 1, 3};
     int bagSize = 8;
 
     int ansDP = solveBagDP(weight, value, bagSize);
     cout << "ansDP: " << ansDP << endl;
+
+    int ansRecursion = solveBagRecursion(weight, value, bagSize);
+    cout << "ansRecursion: " << ansRecursion << endl;
 
     return 0;
 }
