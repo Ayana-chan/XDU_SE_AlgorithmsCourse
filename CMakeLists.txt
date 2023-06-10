@@ -7,4 +7,5 @@ add_executable(AlgorithmsCourse
         homework/heapsort.cpp)
 
 add_executable(01bag homework/01bag.cpp)
-add_executable(GraphAlg homework/GraphAlg.cpp)
+add_executable(GraphAlg homework/Dijkstra.cpp)
+add_executable(BellmanFord homework/BellmanFord.cpp)
