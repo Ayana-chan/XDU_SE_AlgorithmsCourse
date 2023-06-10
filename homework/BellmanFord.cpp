@@ -52,6 +52,9 @@ vector<int> bellmanFord(const int &nodeNum, vector<Edge> *edgeArray, const int &
     for (int i = 0; i < maxTime; i++) {
         int isChanged = false;//若迭代一次之后什么都不改变，则可以退出
 
+        for (Edge e:*edgeArray) {
+
+        }
     }
 
 
